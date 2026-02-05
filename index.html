@@ -1,0 +1,208 @@
+import React, { useState, useEffect } from 'react';
+import { Smartphone, Zap, Camera, Shield, Timer, Award, Flame, Cpu } from 'lucide-react';
+
+const App = () => {
+  const [unlocked, setUnlocked] = useState(false);
+  const [glitch, setGlitch] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(1320); // 13:20 theme
+
+  // Countdown logic
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [timeLeft]);
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden selection:bg-cyan-500">
+      
+      {/* --- OVERLAY: UNLOCK EXPERIENCE --- */}
+      {!unlocked && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black transition-opacity duration-500">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-black to-black"></div>
+          <div className="relative z-10 text-center space-y-8 p-4">
+            <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+              ZENITH X
+            </h1>
+            <p className="text-cyan-400 font-mono tracking-widest uppercase">System Status: Waiting for Authorization...</p>
+            <button 
+              onClick={() => {
+                setUnlocked(true);
+                setGlitch(true);
+                setTimeout(() => setGlitch(false), 500);
+              }}
+              className="group relative px-12 py-6 bg-transparent border-2 border-cyan-400 text-cyan-400 hover:text-black transition-all duration-300"
+            >
+              <div className="absolute inset-0 bg-cyan-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+              <span className="relative z-10 font-black text-2xl tracking-widest">TAP TO UNLEASH</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* --- MAIN LP CONTENT --- */}
+      <div className={`transition-all duration-700 ${unlocked ? 'opacity-100' : 'opacity-0 blur-xl'}`}>
+        
+        {/* --- HERO (CATCH COPY) --- */}
+        <section className="relative min-h-screen flex items-center justify-center pt-20">
+          <div className="absolute top-10 left-10 text-xs font-mono text-cyan-500 animate-pulse">
+            [SYS_ID: 1320-X-ALPHA] <br/>
+            [BRIGHTNESS: MAX_NIT]
+          </div>
+          
+          <div className="container mx-auto px-4 text-center z-10">
+            <div className="inline-block px-3 py-1 border border-fuchsia-500 text-fuchsia-500 text-xs font-bold tracking-widest mb-6 rounded-full animate-bounce">
+              PRE-ORDER DROP: LIVE
+            </div>
+            <h2 className="text-5xl md:text-9xl font-black leading-none mb-6">
+              REALITY <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-fuchsia-500 animate-gradient-x">
+                UPGRADED.
+              </span>
+            </h2>
+            <p className="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl mb-10 leading-relaxed">
+              1320nits of blinding brilliance. 132MP of raw detail. <br/> 
+              Stop living in standard definition.
+            </p>
+            
+            {/* 3D-ish Phone Mockup */}
+            <div className="relative mx-auto w-64 h-[500px] bg-gray-900 rounded-[3rem] border-4 border-gray-800 shadow-[0_0_100px_rgba(34,211,238,0.2)] overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/20 to-fuchsia-500/20 opacity-50 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-full"></div>
+              <div className="flex flex-col items-center justify-center h-full space-y-4">
+                <Flame size={64} className="text-white animate-pulse" />
+                <span className="font-mono text-cyan-400 text-sm">LOADING FUTURE...</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* --- PROBLEM (GLITCHY CARDS) --- */}
+        <section className="py-24 bg-zinc-950 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+          <div className="container mx-auto px-4 relative">
+            <h3 className="text-3xl font-black mb-12 flex items-center gap-4">
+              <span className="bg-fuchsia-600 p-1">WARNING</span> ARE YOU TIRED OF THIS?
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                { title: "Invisible Screens", desc: "Squinting at your phone in the sun like a caveman.", icon: "🌑" },
+                { title: "Potato Cameras", desc: "Taking 'UFO sightings' instead of high-res memories.", icon: "🥔" },
+                { title: "Charger Slavery", desc: "Chained to a wall socket every 4 hours.", icon: "⛓️" }
+              ].map((item, idx) => (
+                <div key={idx} className="group p-8 bg-zinc-900 border-l-4 border-cyan-500 hover:bg-zinc-800 transition-all cursor-crosshair hover:-rotate-1">
+                  <div className="text-4xl mb-4">{item.icon}</div>
+                  <h4 className="text-xl font-bold mb-2 group-hover:text-cyan-400">{item.title}</h4>
+                  <p className="text-gray-500">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* --- SOLUTION (FEATURES) --- */}
+        <section className="py-32 container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div>
+              <h2 className="text-6xl font-black mb-8 leading-tight">
+                THE 1320 <br/> <span className="text-cyan-500 italic">MANIFESTO</span>
+              </h2>
+              <div className="space-y-8">
+                <div className="flex gap-6">
+                  <div className="bg-cyan-500/20 p-4 rounded-2xl h-fit">
+                    <Zap className="text-cyan-400" size={32} />
+                  </div>
+                  <div>
+                    <h5 className="text-2xl font-bold">1320 Nit Blast</h5>
+                    <p className="text-gray-400">Brighter than your future. Legible on the surface of the sun.</p>
+                  </div>
+                </div>
+                <div className="flex gap-6">
+                  <div className="bg-fuchsia-500/20 p-4 rounded-2xl h-fit">
+                    <Camera className="text-fuchsia-400" size={32} />
+                  </div>
+                  <div>
+                    <h5 className="text-2xl font-bold">132MP God-Mode</h5>
+                    <p className="text-gray-400">Capture the pores on a ladybug from a mile away. Literally.</p>
+                  </div>
+                </div>
+                <div className="flex gap-6">
+                  <div className="bg-white/10 p-4 rounded-2xl h-fit">
+                    <Cpu className="text-white" size={32} />
+                  </div>
+                  <div>
+                    <h5 className="text-2xl font-bold">Hyper-Processor</h5>
+                    <p className="text-gray-400">So fast it predicts what you're going to type before you think it.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-gradient-to-tr from-cyan-500 to-fuchsia-500 p-1 rounded-[4rem] rotate-3 hover:rotate-0 transition-transform duration-500">
+               <div className="bg-black rounded-[3.8rem] p-12">
+                  <div className="space-y-6">
+                    <div className="h-2 w-20 bg-gray-800 rounded-full"></div>
+                    <div className="text-8xl font-black opacity-10">X-1320</div>
+                    <p className="text-sm font-mono text-cyan-500">#NO_REGRETS #ZENITH_CULT</p>
+                  </div>
+               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* --- CLOSING (CTA) --- */}
+        <section className="py-24 bg-white text-black text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-10 font-black text-9xl opacity-5 pointer-events-none">BUY NOW</div>
+          <div className="container mx-auto px-4 relative z-10">
+            <h2 className="text-5xl md:text-7xl font-black mb-8">DON'T MISS THE DROP.</h2>
+            
+            <div className="mb-12">
+              <div className="inline-flex flex-col items-center">
+                <span className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Hype Window Closing In</span>
+                <div className="text-6xl font-mono font-black tracking-tighter tabular-nums bg-black text-white px-8 py-4 rounded-xl shadow-2xl">
+                  {formatTime(timeLeft)}
+                </div>
+              </div>
+            </div>
+
+            <button className="group relative bg-black text-white px-16 py-8 rounded-full text-2xl font-black hover:scale-110 transition-transform active:scale-95 shadow-2xl overflow-hidden">
+              <span className="relative z-10">I WANT THE FUTURE →</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+            <p className="mt-6 font-bold text-sm uppercase tracking-tighter">Limited to 1320 units globally. 542 already claimed.</p>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="py-12 text-center text-gray-600 text-xs border-t border-zinc-900">
+          <p>© 2026 ZENITH LABS. ALL SPECS ARE TOO AWESOME TO BE REAL. (PASONA COMPLIANT)</p>
+        </footer>
+      </div>
+
+      {/* GLITCH OVERLAY (Visual Flavor) */}
+      {glitch && (
+        <div className="fixed inset-0 z-[100] bg-cyan-500/30 mix-blend-hard-light animate-ping pointer-events-none"></div>
+      )}
+
+      <style jsx>{`
+        @keyframes gradient-x {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-x {
+          background-size: 200% 200%;
+          animation: gradient-x 5s ease infinite;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default App;
